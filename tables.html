@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+		<title>Data 8 Tables Visualizer</title>
+		<link rel="stylesheet" type="text/css" href="./tables_files/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="./tables_files/dataTables.bootstrap4.min.css">
+		<link rel="stylesheet" type="text/css" href="./tables_files/stylesheet.css">
+
+		<script type="text/javascript" language="javascript" src="./tables_files/jquery-3.3.1.js"></script>
+		<script type="text/javascript" language="javascript" src="./tables_files/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" language="javascript" src="./tables_files/dataTables.bootstrap4.min.js"></script>
+	</head>
+	<body>
+		<div>
+			<h1>
+				Data 8 Table Function Visualizer
+			</h1>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<form id="target">
+						<div class="form-group">
+							<div class="row text-center">
+								<div class="col-sm-2">
+									<select class="form-control" id="dataset">
+										<option>cones</option>
+										<option>chocolates</option>
+									</select>
+								</div>
+								<div class="col-xs-1">
+									<h2>.group(</h2>
+								</div>
+								<div class="col-md-3">
+									<select class="form-control" id="column">
+										<option>"Flavor"</option>
+										<option>"Price"</option>
+									</select>
+								</div>
+								<div class="col-xs-1">
+									<h2>, </h2>
+								</div>
+								<div class="col-md-3">
+									<select class="form-control" id="function">
+										<option>no function (count)</option>
+										<option>np.average</option>
+										<option>np.mean</option>
+										<option>sum</option>
+										<option>min</option>
+										<option>max</option>
+										<option>identity</option>
+										<option>first</option>
+									</select>
+
+								</div>
+								<div class="col-xs-2">
+									<h2>)</h2>
+								</div>
+								<div class="col-md-2">
+									<button type="submit" class="btn btn-primary">Visualize!</button>
+								</div>
+							</div>
+						</div>
+					</form>
+
+					<h2 id="code"> &nbsp; </h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-6">
+					<table id="original" class="table table-striped table-bordered" style="width:100%">
+
+					</table>
+				</div>
+				<div class="col-lg-6">
+					<table id="grouped" class="table table-striped table-bordered" style="width:100%">
+
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12 text-center">
+					<h2 id="text"> &nbsp; </h2>
+					<button type="button" class="btn btn-primary" id="back">< Previous Step</button>
+  				<button type="button" class="btn btn-primary" id="next">Next Step ></button>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript">
+		// our first table
+		var datasets = {"cones": {"data":{"Flavor":["Strawberry", "Chocolate", "Chocolate", "Strawberry", "Chocolate"], "Price":[3.55, 4.75, 6.55, 5.25, 5.25]}, "col_order":["Flavor", "Price"]},
+		"chocolates":{"data":{"Color":["Red", "Green", "Blue", "Red", "Green", "Green"], "Shape":["Round", "Rectangular", "Rectangular", "Round", "Rectangular", "Round"],"Amount":[4,6,12,7,9,2],"Price":[1.3,1.2,2.0,1.75,1.4,1.0]}, "col_order":["Color", "Shape", "Amount", "Price"]}
+		}
+		var data;
+
+		// group function
+		function group(data, column, func_name) {
+			var states = [];
+			// phase one is generate the new table with columns and rows
+			var columns = Object.keys(data);
+			if (func_name === "count") {
+				var new_columns = [column, "count"];
+				// highlight the group column in original table
+				var state = {"o_col_h":[column]};
+				states.push(state);
+				// say default is to count and add column to new table
+				var n_data = {};
+				n_data[column] = [];
+				n_data["count"] = [];
+				var ordered = new_columns;
+				state = {"n_data":JSON.parse(JSON.stringify(n_data)), "text":"By default, group will count the number of rows with unique values", "n_col_h":JSON.parse(JSON.stringify([1])), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+				states.push(state);
+			} else {
+				// highlight the group column in original table
+				var state = {"o_col_h":[column]};
+				states.push(state);
+				// add the original column to the table
+				var n_data = {};
+				n_data[column] = [];
+				state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_h":[0], "n_col_ord":[column]};
+				states.push(state);
+
+				var rest_of_columns = columns.filter(function(x) {
+					return x !== column;
+				});
+				var new_columns = [column] + rest_of_columns.map(x => x + " " + func_name)
+				// highlight the column names in original table
+				var ordered = [column];
+				var n_data = {};
+				n_data[column] = [];
+				rest_of_columns.forEach((item, i) => {
+					// highlight the specific column in original table and highlight the function name
+					var new_col_name = item + " " + func_name;
+					var state = {"o_col_h":[item], "command_h":"func", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+					states.push(state);
+					// add the new column to the table
+					n_data[new_col_name] = [];
+					ordered.push(new_col_name);
+					state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_h":[1+i], "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+					states.push(state);
+				});
+			}
+			// phase two is get unique values
+			var uniq = new Set(data[column]);
+			// highlight the group column in original table
+			// display the uniq values of text
+			var unique_str = "Unique values: [" + Array.from(uniq).join(', ') + "]";
+			var state = {"o_col_h":[column], "text":unique_str, "n_col_ord":JSON.parse(JSON.stringify(ordered)), "n_data":JSON.parse(JSON.stringify(n_data))};
+			states.push(state);
+
+			// phase three is step through the original table and generate the arrays
+			var n_data_real = JSON.parse(JSON.stringify(n_data));
+			uniq.forEach((item, i) => {
+				// highlight the items in original table and add value to column
+				var idx_to_highlight = data[column].map(function(x, j) {return j}).filter(function(x) {
+					return data[column][x] === item;
+				});
+				// highlight all the rows and add the value to the new table
+				n_data[column].push(item);
+				n_data_real[column].push(item);
+				var state = {"o_row_h":JSON.parse(JSON.stringify(idx_to_highlight)), "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+				states.push(state);
+
+				if (func_name === "count") {
+					var new_columns = [column, "count"];
+					// set the value in grouped count column to num rows
+					var num = idx_to_highlight.length;
+					// add the num to the state
+					n_data["count"].push(num);
+					var state = {"o_row_h":JSON.parse(JSON.stringify(idx_to_highlight)), "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+					states.push(state);
+
+				} else {
+					columns.forEach((item, i) => {
+						if (item == column) {
+							return;
+						}
+						// highlight the specific column in original table and highlight the row values
+						var cell_highlights = [];
+						var cell_values = [];
+						var new_col_name = item + " " + func_name;
+						idx_to_highlight.forEach((value, j) => {
+								// step through the rest of the columns
+								var cell = [value, i];
+								cell_highlights.push(cell);
+								cell_values.push(data[item][value]);
+						});
+						n_data[new_col_name].push("[" + Array.from(cell_values).join(", ") +"]");
+						var real_value;
+						if (func_name === "sum") {
+							real_value = cell_values.reduce((a, b) => a +b, 0);
+						} else if (func_name === "average" || func_name === "mean") {
+							real_value = cell_values.reduce((a, b) => a +b, 0) / cell_values.length;
+						} else if (func_name === "first") {
+							real_value = cell_values[0];
+						} else if (func_name === "identity") {
+							real_value = "[" + Array.from(cell_values) +"]"
+						} else if (func_name === "max") {
+							real_value = Math.max.apply(null, cell_values);
+						} else if (func_name === "min") {
+							real_value = Math.min.apply(null, cell_values);
+						}
+
+						if (func_name !== "identity" && func_name !== "first" && func_name !== "count" && typeof cell_values[0] === "string") {
+							real_value = "";
+						}
+						n_data_real[new_col_name].push(real_value);
+						var state = {"o_col_h":[item], "o_row_h":JSON.parse(JSON.stringify(idx_to_highlight)), "o_cell_h":JSON.parse(JSON.stringify(cell_highlights)), "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+						states.push(state);
+					});
+
+				}
+			});
+
+			if (func_name !== "count") {
+				// highlight the func name
+				var state = {"command_h":"func", "text":"Call the function on Arrays", "n_data":JSON.parse(JSON.stringify(n_data_real)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+				states.push(state);
+			}
+
+			// call the function on each cell if needed
+			return states
+		}
+		var states = [];
+		var cur_state_idx = -1;
+		var cur_state;
+		var header_text;
+		var func_name_original;
+		var pre_head_text;
+		var post_head_text;
+
+
+		$( "#target" ).submit(function( event ) {
+			var col_name = $('#column').val();
+			var func_name = $('#function').val();
+			func_name_original = $('#function').val();
+			if (func_name === "np.average") {
+				func_name = "average";
+			}
+
+			if (func_name === "np.mean") {
+				func_name = "mean";
+			}
+
+			if (func_name === "no function (count)") {
+				func_name = "count";
+			}
+
+			var dataset_val = $('#dataset').val();
+			data = datasets[dataset_val]["data"];
+			var dataset_col_order = datasets[dataset_val]["col_order"];
+			// build original table from the rows and values
+
+			var ths = dataset_col_order.map(function(x) {
+				return "<th>" + x + "</th>"
+			}).join("\n");
+
+			var trs = data[dataset_col_order[0]].map(function(item, j) {
+				var tds = dataset_col_order.map(function(i) {
+					return "<td>" + data[i][j] + "</td>"
+				}).join("\n");
+				return "<tr>\n" + tds + "\n</tr>";
+			}).join("\n");
+
+			var htmlString = "<table><thead><tr>" + ths + "</tr><thead><tbody>" + trs + "<tbody><table";
+			$("#original").html(htmlString);
+
+
+
+			states = group(data, col_name.replace(/["']/g, ""), func_name);
+			cur_state_idx = -1;
+
+			$('#back').prop('disabled', true);
+			$('#next').prop('disabled', false);
+
+			// set the header text
+			if (func_name_original === "no function (count)") {
+
+				header_text = dataset_val + ".group("+ col_name + ")";
+			} else {
+				pre_head_text = dataset_val + ".group("+col_name + ", ";
+				post_head_text = ")";
+				header_text = dataset_val + ".group("+col_name + ", " + func_name_original + ")";
+			}
+			$('#code').text(header_text)
+			$("#target").hide();
+
+			event.preventDefault();
+		});
+
+
+		$('#next').click(function() {
+			if (cur_state_idx < states.length - 1) {
+				cur_state_idx = cur_state_idx + 1;
+				cur_state = states[cur_state_idx];
+				// redraw table
+				update(cur_state);
+			}
+
+			if (cur_state_idx >= states.length - 1) {
+				$('#next').prop('disabled', true);
+			}
+
+			if (cur_state_idx >= 0) {
+				$('#back').prop('disabled', false);
+			}
+
+
+		})
+
+		$('#back').click(function() {
+			if (cur_state_idx > 0) {
+				cur_state_idx = cur_state_idx - 1;
+				cur_state = states[cur_state_idx];
+				// redraw table
+				update(cur_state);
+			}
+
+			if (cur_state_idx < states.length -1) {
+				$('#next').prop('disabled', false);
+			}
+
+			if (cur_state_idx <= 0) {
+				$('#back').prop('disabled', true);
+			}
+
+		})
+
+		function update(state) {
+			// possible values
+
+			var text = state["text"];
+
+			if (text === undefined) {
+				$('#text').text('\xa0');
+			} else {
+				$('#text').text(text);
+			}
+
+			var command_h = state["command_h"];
+			if (command_h === undefined) {
+				$('#code').replaceWith("<h2 id=\"code\">" + header_text + "</h2>");
+			} else {
+				$('#code').replaceWith("<h2 id=\"code\">" + pre_head_text + "<u><b>" + func_name_original + "</b></u>" + post_head_text + "</h2>");
+			}
+
+			var o_col_h = state["o_col_h"];
+			var o_row_h = state["o_row_h"];
+			var o_cell_h = state["o_cell_h"];
+
+			if (o_col_h === undefined) {
+				$("#original th").removeClass("highlight-col");
+			} else {
+				//Add highlight class to new column
+				$("#original th").removeClass("highlight-col");
+
+			  var index = Object.keys(data).indexOf(o_col_h[0]);
+			  $("#original tr").each(function(i, tr) {
+			  	$(tr).find('th').eq(index).addClass("highlight-col");
+			  });
+			}
+
+			if (o_row_h === undefined) {
+				$("#original tr").removeClass("highlight-row");
+			} else {
+				//Add highlight class to new column
+				$("#original tr").removeClass("highlight-row");
+
+				var idx = o_row_h.map(function(x) {return x+1;});
+				$("#original tr").each(function(j, tr) {
+					if (idx.includes(j)) {
+						$(tr).addClass("highlight-row");
+					}
+				});
+
+			}
+
+			if (o_cell_h === undefined) {
+				$("#original td").removeClass("highlight-cell");
+			} else {
+				//Add highlight class to new column
+				$("#original td").removeClass("highlight-cell");
+				$("#original tr").each(function(i, tr) {
+			  	$(tr).find('td').each(function(j, td) {
+						if (matrixSearch(o_cell_h, [i-1, j])) {
+							$(td).addClass("highlight-cell")
+						}
+					})
+
+			  });
+			}
+
+			var n_data = state["n_data"];
+			var n_col_ord = state["n_col_ord"];
+			var n_col_h = state["n_col_h"];
+
+			if (n_data === undefined) {
+				$("#grouped").html("");
+			} else {
+				$("#grouped").html("");
+				var ths = n_col_ord.map(function(x) {
+					return "<th>" + x + "</th>"
+				}).join("\n");
+
+
+				var trs = n_data[n_col_ord[0]].map(function(item, j) {
+					var tds = n_col_ord.map(function(key) {
+						if (n_data[key][j] === undefined) {
+							n_data[key][j] = "";
+						}
+						var td = "<td>" + n_data[key][j] + "</td>";
+						return td;
+					});
+					return "<tr>\n" + tds.join("\n") + "</tr>";
+				}).join("\n");
+
+				var htmlString = "<table><thead><tr>" + ths + "</tr><thead><tbody>" + trs + "<tbody><table";
+				$("#grouped").html(htmlString);
+
+			}
+
+			if (n_col_h === undefined) {
+				$("#grouped th").removeClass("highlight-col");
+			} else {
+				//Add highlight class to new column
+				$("#grouped th").removeClass("highlight-col");
+
+			  var index = Object.keys(data).indexOf(n_col_h[0]);
+			  $("#grouped tr").each(function(i, tr) {
+			  	$(tr).find('th').eq(index).addClass("highlight-col");
+			  });
+			}
+		}
+
+		$("#dataset").change(function(x) {
+			var dataset_val = $('#dataset').val();
+			var col_options = datasets[dataset_val]["col_order"].map(function(x) {
+				return '\"' + x + '\"';
+			});
+			$('#column').empty();
+			$('#column').append(col_options.map(function(x) {
+				return "<option>" + x + "</option>";
+			}).join("\n"));
+		});
+
+		function matrixSearch(arr, x) {
+			var contained = false;
+			arr.forEach((item, i) => {
+				if (JSON.stringify(item) === JSON.stringify(x)) {
+					contained = true;
+				}
+			});
+			return contained;
+
+		}
+
+	</script>
+</html>
