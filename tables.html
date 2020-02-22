@@ -570,7 +570,7 @@
 				header_text = dataset_val + ".pivot(" + col_name_1 + ", " + col_name_2 + ", " + col_name_3 + ", " + func_name_original + ")";
 			}
 			$('#code').text(header_text)
-			$("#target-group").hide();
+			$("#target-pivot").hide();
 
 			event.preventDefault();
 		});
@@ -660,6 +660,7 @@
 
 			if (o_cell_h === undefined) {
 				$("#original td").removeClass("highlight-cell");
+				$("#original th").removeClass("highlight-cell");
 			} else {
 				//Add highlight class to new column
 				$("#original td").removeClass("highlight-cell");
@@ -667,6 +668,12 @@
 			  	$(tr).find('td').each(function(j, td) {
 						if (matrixSearch(o_cell_h, [i-1, j])) {
 							$(td).addClass("highlight-cell")
+						}
+					})
+
+					$(tr).find('th').each(function(j, th) {
+						if (matrixSearch(o_cell_h, [i-1, j])) {
+							$(th).addClass("highlight-cell")
 						}
 					})
 
@@ -684,7 +691,6 @@
 				var ths = n_col_ord.map(function(x) {
 					return "<th>" + x + "</th>"
 				}).join("\n");
-
 
 				var trs = n_data[n_col_ord[0]].map(function(item, j) {
 					var tds = n_col_ord.map(function(key) {
@@ -704,13 +710,18 @@
 
 			if (n_col_h === undefined) {
 				$("#grouped th").removeClass("highlight-col");
+				$("#grouped td").removeClass("highlight-col");
 			} else {
 				//Add highlight class to new column
 				$("#grouped th").removeClass("highlight-col");
+				$("#grouped td").removeClass("highlight-col");
 
 			  var index = n_col_h[0];
 			  $("#grouped tr").each(function(i, tr) {
 			  	$(tr).find('th').eq(index).addClass("highlight-col");
+			  });
+				$("#grouped tr").each(function(i, td) {
+			  	$(td).find('td').eq(index).addClass("highlight-col");
 			  });
 			}
 		}
