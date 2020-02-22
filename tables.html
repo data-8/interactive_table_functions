@@ -5,12 +5,12 @@
 
 		<title>Data 8 Tables Visualizer</title>
 		<link rel="stylesheet" type="text/css" href="./tables_files/bootstrap.css">
-		<link rel="stylesheet" type="text/css" href="./tables_files/dataTables.bootstrap4.min.css">
-		<link rel="stylesheet" type="text/css" href="./tables_files/stylesheet.css">
 
+		<link rel="stylesheet" type="text/css" href="./tables_files/stylesheet.css">
 		<script type="text/javascript" language="javascript" src="./tables_files/jquery-3.3.1.js"></script>
-		<script type="text/javascript" language="javascript" src="./tables_files/jquery.dataTables.min.js"></script>
-		<script type="text/javascript" language="javascript" src="./tables_files/dataTables.bootstrap4.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
 	</head>
 	<body>
 		<div class="row text-center">
@@ -23,52 +23,139 @@
 			<div class="col-md-1" ></div>
 		</div>
 		<div class="container">
-			<div class="row">
-				<div class="col-lg-12 text-center">
-					<form id="target">
-						<div class="form-group">
-							<div class="row text-center">
-								<div class="col-sm-2">
-									<select class="form-control" id="dataset">
-										<option>cones</option>
-										<option>chocolates</option>
-									</select>
-								</div>
-								<div class="col-xs-1">
-									<h2>.group(</h2>
-								</div>
-								<div class="col-md-3">
-									<select class="form-control" id="column">
-										<option>"Flavor"</option>
-										<option>"Price"</option>
-									</select>
-								</div>
-								<div class="col-xs-1">
-									<h2>, </h2>
-								</div>
-								<div class="col-md-3">
-									<select class="form-control" id="function">
-										<option>no function (count)</option>
-										<option>np.average</option>
-										<option>np.mean</option>
-										<option>sum</option>
-										<option>min</option>
-										<option>max</option>
-										<option>identity</option>
-										<option>first</option>
-									</select>
+			<ul class="nav nav-tabs">
+		    <li class="nav-item">
+		        <a href="#group-tab" class="nav-link active" data-toggle="tab">Group</a>
+		    </li>
+		    <li class="nav-item">
+		        <a href="#pivot-tab" class="nav-link" data-toggle="tab">Pivot</a>
+		    </li>
+		    <li class="nav-item">
+		        <a href="#join-tab" class="nav-link" data-toggle="tab">Join</a>
+		    </li>
+			</ul>
+			<div class="tab-content">
+			    <div class="tab-pane active" id="group-tab">
+						<div class="row">
+							<div class="col-lg-12 text-center">
+								<form id="target-group">
+									<div class="form-group">
+										<div class="row text-center">
+											<div class="col-sm-2">
+												<select class="form-control" id="group-dataset">
+													<option>cones</option>
+													<option>chocolates</option>
+												</select>
+											</div>
+											<div class="col-xs-1">
+												<h2>.group(</h2>
+											</div>
+											<div class="col-md-3">
+												<select class="form-control" id="group-column">
+													<option>"Flavor"</option>
+													<option>"Price"</option>
+												</select>
+											</div>
+											<div class="col-xs-1">
+												<h2>, </h2>
+											</div>
+											<div class="col-md-3">
+												<select class="form-control" id="group-function">
+													<option>no function (count)</option>
+													<option>np.average</option>
+													<option>np.mean</option>
+													<option>sum</option>
+													<option>min</option>
+													<option>max</option>
+													<option>identity</option>
+													<option>first</option>
+												</select>
 
-								</div>
-								<div class="col-xs-2">
-									<h2>)</h2>
-								</div>
-								<div class="col-md-2">
-									<button type="submit" class="btn btn-primary">Visualize!</button>
-								</div>
+											</div>
+											<div class="col-xs-2">
+												<h2>)</h2>
+											</div>
+											<div class="col-md-2">
+												<button type="submit" class="btn btn-primary">Visualize!</button>
+											</div>
+										</div>
+									</div>
+								</form>
+
 							</div>
 						</div>
-					</form>
+			    </div>
+			    <div class="tab-pane" id="pivot-tab">
+						<div class="row">
+							<div class="col-lg-12 text-center">
+								<form id="target-pivot">
+									<div class="form-group">
+										<div class="row text-center">
+											<div class="col-lg-1">
+												<select class="form-control" id="pivot-dataset">
+													<option>cones</option>
+													<option>chocolates</option>
+												</select>
+											</div>
+											<div class="col-xs-1">
+												<h2>.pivot(</h2>
+											</div>
+											<div class="col-lg-2">
+												<select class="form-control" id="pivot-column-1">
+													<option>"Flavor"</option>
+													<option>"Price"</option>
+												</select>
+											</div>
+											<div class="col-xs-1">
+												<h2>, </h2>
+											</div>
+											<div class="col-lg-2">
+												<select class="form-control" id="pivot-column-2">
+													<option>"Flavor"</option>
+													<option>"Price"</option>
+												</select>
+											</div>
+											<div class="col-lg-2">
+												<select class="form-control" id="pivot-column-3">
+													<option>no argument<option>
+													<option>"Flavor"</option>
+													<option>"Price"</option>
+												</select>
+											</div>
+											<div class="col-xs-1">
+												<h2>, </h2>
+											</div>
+											<div class="col-md-2">
+												<select class="form-control" id="pivot-function">
+													<option>no function (count)</option>
+													<option>np.average</option>
+													<option>np.mean</option>
+													<option>sum</option>
+													<option>min</option>
+													<option>max</option>
+													<option>identity</option>
+													<option>first</option>
+												</select>
 
+											</div>
+											<div class="col-xs-2">
+												<h2>)</h2>
+											</div>
+											<div class="col-md-2">
+												<button type="submit" class="btn btn-primary">Visualize!</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+			    </div>
+			    <div class="tab-pane" id="join-tab">
+			        <p>not implemented yet</p>
+			    </div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
 					<h2 id="code"> &nbsp; </h2>
 				</div>
 			</div>
@@ -232,6 +319,132 @@
 			// call the function on each cell if needed
 			return states
 		}
+
+		function pivot(data, pivot_column, group_column, collect_column, func_name) {
+			var o_ordered = data["col_order"];
+			var data = data["data"]
+			var states = [];
+			// phase one is generate the new table with columns and rows
+			var original_columns = Object.keys(data);
+			var pivot_uniq = Array.from(new Set(data[pivot_column]));
+			var group_uniq = Array.from(new Set(data[group_column]));
+			var new_columns = [group_column].concat(pivot_uniq);
+			// display the new columns
+
+			var states = [];
+			// highlight the pivot column
+			var state = {"o_col_h":[pivot_column], "text":"Unique Value in Pivot Column are: [" + pivot_uniq.join(", ") + "]"};
+			states.push(state);
+
+			var n_data = {};
+			new_columns.forEach((item, i) => {
+				n_data[item] = [];
+			});
+
+			// add the columns
+			var ordered = new_columns;
+			state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+			states.push(state);
+
+
+			// add the rows
+			n_data[group_column] = JSON.parse(JSON.stringify(group_uniq));
+			state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+			states.push(state);
+
+			// iterate through the pairings highlighting the pivot column and row value, the group column and row value in n
+			// if there is a specified column then highlight that column in o and the cell value
+			// if func is count put zeros everywhere
+			data[group_column].forEach(function(grouped_value, i) {
+				// highlight the row, highlight the two columns in new
+				pivot_uniq.forEach((pivot_value, i) => {
+					var group_index = group_uniq.indexOf(grouped_value);
+					if (func_name === "count") {
+						n_data = JSON.parse(JSON.stringify(n_data));
+						n_data[pivot_value][group_index] = 0;
+					} else {
+						//if its a function use arrays and highlight the column
+						n_data[pivot_value][group_index] = [];
+					}
+				});
+
+
+			});
+
+			// iterate through every row
+
+			data[group_column].forEach(function(grouped_value, i) {
+				// highlight the row, highlight the two columns in new
+				var pivot_value = data[pivot_column][i];
+				var group_index = group_uniq.indexOf(grouped_value);
+				var pivot_index = pivot_uniq.indexOf(pivot_value);
+				state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index]};
+				if (func_name !== "count") {
+					state["o_col_h"] = o_ordered.indexOf(collect_column);
+				}
+				states.push(state);
+				// if its counts use a counter
+				if (func_name === "count") {
+					n_data = JSON.parse(JSON.stringify(n_data));
+					n_data[pivot_value][group_index] = n_data[pivot_value][group_index] + 1;
+					state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index]};
+					states.push(state);
+				} else {
+					//if its a function use arrays and highlight the column
+					var new_value = data[collect_column][i];
+					n_data[pivot_value][group_index] = JSON.parse(JSON.stringify(n_data[pivot_value][group_index])).concat([new_value])
+					state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index]};
+					states.push(state);
+				}
+
+			});
+			// finally, call the function if needed on arrays
+			if (func_name !== "count") {
+					n_data = JSON.parse(JSON.stringify(n_data));
+					pivot_uniq.forEach((pivot_col, i) => {
+						all_values = n_data[pivot_col];
+						all_values = all_values.map(function(cell_values) {
+							var real_value;
+							if (func_name === "sum") {
+								real_value = cell_values.reduce((a, b) => a +b, 0);
+							} else if (func_name === "average" || func_name === "mean") {
+
+								real_value = cell_values.reduce((a, b) => a +b, 0) / cell_values.length;
+								console.log(real_value)
+							} else if (func_name === "first") {
+								real_value = cell_values[0];
+							} else if (func_name === "identity") {
+								real_value = "[" + Array.from(cell_values) +"]"
+							} else if (func_name === "max") {
+								real_value = Math.max.apply(null, cell_values);
+							} else if (func_name === "min") {
+								real_value = Math.min.apply(null, cell_values);
+							}
+
+							if (func_name !== "identity" && func_name !== "first" && func_name !== "count" && typeof cell_values[0] === "string") {
+								real_value = 0;
+							}
+							if (real_value !== real_value) {
+								real_value = 0;
+							}
+							if (real_value === null) {
+								real_value = ""
+							}
+							return real_value;
+						});
+						console.log("yanay")
+						console.log(JSON.parse(JSON.stringify(all_values)))
+						n_data[pivot_col] = JSON.parse(JSON.stringify(all_values));
+					});
+					console.log(n_data)
+					var state = {"command_h":"func", "text":"Call the function on Arrays", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+					console.log(func_name)
+					states.push(state);
+				};
+			return states
+		}
+
+
 		var states = [];
 		var cur_state_idx = -1;
 		var cur_state;
@@ -241,10 +454,10 @@
 		var post_head_text;
 
 
-		$( "#target" ).submit(function( event ) {
-			var col_name = $('#column').val();
-			var func_name = $('#function').val();
-			func_name_original = $('#function').val();
+		$("#target-group" ).submit(function( event ) {
+			var col_name = $('#group-column').val();
+			var func_name = $('#group-function').val();
+			func_name_original = $('#group-function').val();
 			if (func_name === "np.average") {
 				func_name = "average";
 			}
@@ -257,7 +470,7 @@
 				func_name = "count";
 			}
 
-			var dataset_val = $('#dataset').val();
+			var dataset_val = $('#group-dataset').val();
 			data = datasets[dataset_val]["data"];
 			var dataset_col_order = datasets[dataset_val]["col_order"];
 			// build original table from the rows and values
@@ -294,7 +507,70 @@
 				header_text = dataset_val + ".group("+col_name + ", " + func_name_original + ")";
 			}
 			$('#code').text(header_text)
-			$("#target").hide();
+			$("#target-group").hide();
+
+			event.preventDefault();
+		});
+
+		$("#target-pivot" ).submit(function( event ) {
+			var col_name_1 = $('#pivot-column-1').val();
+			var col_name_2 = $('#pivot-column-2').val();
+			var col_name_3 = $('#pivot-column-3').val();
+
+			var func_name = $('#pivot-function').val();
+			func_name_original = $('#pivot-function').val();
+
+			if (col_name_3 === "no argument") {
+				func_name = "count";
+			}
+
+			if (func_name === "np.average") {
+				func_name = "average";
+			}
+
+			if (func_name === "np.mean") {
+				func_name = "mean";
+			}
+
+			if (func_name === "no function (count)") {
+				func_name = "count";
+			}
+
+			var dataset_val = $('#pivot-dataset').val();
+			data = datasets[dataset_val]["data"];
+			var dataset_col_order = datasets[dataset_val]["col_order"];
+			// build original table from the rows and values
+
+			var ths = dataset_col_order.map(function(x) {
+				return "<th>" + x + "</th>"
+			}).join("\n");
+
+			var trs = data[dataset_col_order[0]].map(function(item, j) {
+				var tds = dataset_col_order.map(function(i) {
+					return "<td>" + data[i][j] + "</td>"
+				}).join("\n");
+				return "<tr>\n" + tds + "\n</tr>";
+			}).join("\n");
+
+			var htmlString = "<table><thead><tr>" + ths + "</tr><thead><tbody>" + trs + "<tbody><table";
+			$("#original").html(htmlString);
+
+			states = pivot(datasets[dataset_val], col_name_1.replace(/["']/g, ""), col_name_2.replace(/["']/g, ""), col_name_3.replace(/["']/g, ""), func_name);
+			cur_state_idx = -1;
+
+			$('#back').prop('disabled', true);
+			$('#next').prop('disabled', false);
+
+			// set the header text
+			if (func_name_original === "no function (count)") {
+				header_text = dataset_val + ".pivot("+ col_name_1 + ", " + col_name_2 + ")";
+			} else {
+				pre_head_text = dataset_val + ".pivot(" + col_name_1 + ", " + col_name_2 + ", " + col_name_3 + ", ";
+				post_head_text = ")";
+				header_text = dataset_val + ".pivot(" + col_name_1 + ", " + col_name_2 + ", " + col_name_3 + ", " + func_name_original + ")";
+			}
+			$('#code').text(header_text)
+			$("#target-group").hide();
 
 			event.preventDefault();
 		});
@@ -315,8 +591,6 @@
 			if (cur_state_idx >= 0) {
 				$('#back').prop('disabled', false);
 			}
-
-
 		})
 
 		$('#back').click(function() {
@@ -339,9 +613,7 @@
 
 		function update(state) {
 			// possible values
-
 			var text = state["text"];
-
 			if (text === undefined) {
 				$('#text').text('\xa0');
 			} else {
@@ -436,20 +708,42 @@
 				//Add highlight class to new column
 				$("#grouped th").removeClass("highlight-col");
 
-			  var index = Object.keys(data).indexOf(n_col_h[0]);
+			  var index = n_col_h[0];
 			  $("#grouped tr").each(function(i, tr) {
 			  	$(tr).find('th').eq(index).addClass("highlight-col");
 			  });
 			}
 		}
 
-		$("#dataset").change(function(x) {
-			var dataset_val = $('#dataset').val();
+		$("#group-dataset").change(function(x) {
+			var dataset_val = $('#group-dataset').val();
 			var col_options = datasets[dataset_val]["col_order"].map(function(x) {
 				return '\"' + x + '\"';
 			});
-			$('#column').empty();
-			$('#column').append(col_options.map(function(x) {
+			$('#group-column').empty();
+			$('#group-column').append(col_options.map(function(x) {
+				return "<option>" + x + "</option>";
+			}).join("\n"));
+		});
+
+		$("#pivot-dataset").change(function(x) {
+			var dataset_val = $('#pivot-dataset').val();
+
+			var col_options = datasets[dataset_val]["col_order"].map(function(x) {
+				return '\"' + x + '\"';
+			});
+			$('#pivot-column-1').empty();
+			$('#pivot-column-2').empty();
+			$('#pivot-column-3').empty();
+			$('#pivot-column-1').append(col_options.map(function(x) {
+				return "<option>" + x + "</option>";
+			}).join("\n"));
+
+			$('#pivot-column-2').append(col_options.map(function(x) {
+				return "<option>" + x + "</option>";
+			}).join("\n"));
+
+			$('#pivot-column-3').append(col_options.concat(["no argument"]).map(function(x) {
 				return "<option>" + x + "</option>";
 			}).join("\n"));
 		});
@@ -464,6 +758,7 @@
 			return contained;
 
 		}
+
 
 	</script>
 </html>
