@@ -23,7 +23,7 @@
 			<div class="col-md-1" ></div>
 		</div>
 		<div class="container">
-			<ul class="nav nav-tabs">
+			<ul class="nav nav-tabs" id="nav">
 		    <li class="nav-item">
 		        <a href="#group-tab" class="nav-link active" data-toggle="tab">Group</a>
 		    </li>
@@ -70,7 +70,6 @@
 													<option>identity</option>
 													<option>first</option>
 												</select>
-
 											</div>
 											<div class="col-xs-2">
 												<h2>)</h2>
@@ -81,7 +80,6 @@
 										</div>
 									</div>
 								</form>
-
 							</div>
 						</div>
 			    </div>
@@ -100,7 +98,7 @@
 											<div class="col-xs-1">
 												<h2>.pivot(</h2>
 											</div>
-											<div class="col-lg-2">
+											<div class="col-lg-1">
 												<select class="form-control" id="pivot-column-1">
 													<option>"Flavor"</option>
 													<option>"Price"</option>
@@ -109,15 +107,18 @@
 											<div class="col-xs-1">
 												<h2>, </h2>
 											</div>
-											<div class="col-lg-2">
+											<div class="col-lg-1">
 												<select class="form-control" id="pivot-column-2">
 													<option>"Flavor"</option>
 													<option>"Price"</option>
 												</select>
 											</div>
+											<div class="col-xs-1">
+												<h2>, </h2>
+											</div>
 											<div class="col-lg-2">
 												<select class="form-control" id="pivot-column-3">
-													<option>no argument<option>
+													<option>no argument</option>
 													<option>"Flavor"</option>
 													<option>"Price"</option>
 												</select>
@@ -136,7 +137,6 @@
 													<option>identity</option>
 													<option>first</option>
 												</select>
-
 											</div>
 											<div class="col-xs-2">
 												<h2>)</h2>
@@ -172,10 +172,11 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-12 text-center">
+				<div class="col-lg-12 text-center" id="control" style="display: none;">
 					<h2 id="text"> &nbsp; </h2>
-					<button type="button" class="btn btn-primary" id="back">< Previous Step</button>
-  				<button type="button" class="btn btn-primary" id="next">Next Step ></button>
+					<button type="button" class="btn btn-danger" id="back">< Previous Step</button>
+  				<button type="button" class="btn btn-success" id="next">Next Step ></button>
+					<button type="button" class="btn btn-primary" id="reload-button">New Visualization</button>
 				</div>
 			</div>
 		</div>
@@ -192,14 +193,15 @@
 		var data;
 
 		// group function
-		function group(data, column, func_name) {
+		function group(dataset, column, func_name) {
 			var states = [];
+			var data = dataset["data"];
 			// phase one is generate the new table with columns and rows
 			var columns = Object.keys(data);
 			if (func_name === "count") {
 				var new_columns = [column, "count"];
 				// highlight the group column in original table
-				var state = {"o_col_h":[column]};
+				var state = {"o_col_h":[dataset["col_order"].indexOf(column)]};
 				states.push(state);
 				// say default is to count and add column to new table
 				var n_data = {};
@@ -210,7 +212,7 @@
 				states.push(state);
 			} else {
 				// highlight the group column in original table
-				var state = {"o_col_h":[column]};
+				var state = {"o_col_h":[dataset["col_order"].indexOf(column)]};
 				states.push(state);
 				// add the original column to the table
 				var n_data = {};
@@ -229,7 +231,7 @@
 				rest_of_columns.forEach((item, i) => {
 					// highlight the specific column in original table and highlight the function name
 					var new_col_name = item + " " + func_name;
-					var state = {"o_col_h":[item], "command_h":"func", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+					var state = {"o_col_h":[dataset["col_order"].indexOf(item)], "command_h":"func", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
 					states.push(state);
 					// add the new column to the table
 					n_data[new_col_name] = [];
@@ -243,7 +245,7 @@
 			// highlight the group column in original table
 			// display the uniq values of text
 			var unique_str = "Unique values: [" + Array.from(uniq).join(', ') + "]";
-			var state = {"o_col_h":[column], "text":unique_str, "n_col_ord":JSON.parse(JSON.stringify(ordered)), "n_data":JSON.parse(JSON.stringify(n_data))};
+			var state = {"o_col_h":[dataset["col_order"].indexOf(column)], "text":unique_str, "n_col_ord":JSON.parse(JSON.stringify(ordered)), "n_data":JSON.parse(JSON.stringify(n_data))};
 			states.push(state);
 
 			// phase three is step through the original table and generate the arrays
@@ -303,7 +305,7 @@
 							real_value = "";
 						}
 						n_data_real[new_col_name].push(real_value);
-						var state = {"o_col_h":[item], "o_row_h":JSON.parse(JSON.stringify(idx_to_highlight)), "o_cell_h":JSON.parse(JSON.stringify(cell_highlights)), "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+						var state = {"o_col_h":[dataset["col_order"].indexOf(item)], "o_row_h":JSON.parse(JSON.stringify(idx_to_highlight)), "o_cell_h":JSON.parse(JSON.stringify(cell_highlights)), "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
 						states.push(state);
 					});
 
@@ -333,7 +335,7 @@
 
 			var states = [];
 			// highlight the pivot column
-			var state = {"o_col_h":[pivot_column], "text":"Unique Value in Pivot Column are: [" + pivot_uniq.join(", ") + "]"};
+			var state = {"o_col_h":[o_ordered.indexOf(pivot_column)], "text":"Unique Value(s) in Pivot Column are: [" + pivot_uniq.join(", ") + "]"};
 			states.push(state);
 
 			var n_data = {};
@@ -349,7 +351,7 @@
 
 			// add the rows
 			n_data[group_column] = JSON.parse(JSON.stringify(group_uniq));
-			state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+			state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), text:"Unique Value(s) in group column are: [" + group_uniq.join(", ") + "]", "o_col_h":[o_ordered.indexOf(group_column)]};
 			states.push(state);
 
 			// iterate through the pairings highlighting the pivot column and row value, the group column and row value in n
@@ -380,20 +382,27 @@
 				var pivot_index = pivot_uniq.indexOf(pivot_value);
 				state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index]};
 				if (func_name !== "count") {
-					state["o_col_h"] = o_ordered.indexOf(collect_column);
+					state["o_col_h"] = [o_ordered.indexOf(collect_column)];
+				} else {
+					state["text"] = "By Default, pivout counts how often each pair occurs.";
 				}
+
 				states.push(state);
 				// if its counts use a counter
 				if (func_name === "count") {
 					n_data = JSON.parse(JSON.stringify(n_data));
 					n_data[pivot_value][group_index] = n_data[pivot_value][group_index] + 1;
-					state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index]};
+					state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index], "text":"By Default, pivout counts how often each pair occurs."};
+					state["n_cell_h"] = [[group_index, pivot_index + 1]]
 					states.push(state);
 				} else {
 					//if its a function use arrays and highlight the column
 					var new_value = data[collect_column][i];
 					n_data[pivot_value][group_index] = JSON.parse(JSON.stringify(n_data[pivot_value][group_index])).concat([new_value])
-					state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index]};
+					state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index], "n_cell_h":[group_index, pivot_index+1]};
+					state["o_col_h"] = [o_ordered.indexOf(collect_column)];
+					state["o_cell_h"] = [[i, o_ordered.indexOf(collect_column)]];
+					state["n_cell_h"] = [[group_index, pivot_index + 1]];
 					states.push(state);
 				}
 
@@ -432,15 +441,15 @@
 							}
 							return real_value;
 						});
-						console.log("yanay")
-						console.log(JSON.parse(JSON.stringify(all_values)))
+
 						n_data[pivot_col] = JSON.parse(JSON.stringify(all_values));
 					});
-					console.log(n_data)
+
 					var state = {"command_h":"func", "text":"Call the function on Arrays", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
-					console.log(func_name)
 					states.push(state);
 				};
+			var state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+			states.push(state);
 			return states
 		}
 
@@ -489,9 +498,7 @@
 			var htmlString = "<table><thead><tr>" + ths + "</tr><thead><tbody>" + trs + "<tbody><table";
 			$("#original").html(htmlString);
 
-
-
-			states = group(data, col_name.replace(/["']/g, ""), func_name);
+			states = group(datasets[dataset_val], col_name.replace(/["']/g, ""), func_name);
 			cur_state_idx = -1;
 
 			$('#back').prop('disabled', true);
@@ -510,6 +517,9 @@
 			$("#target-group").hide();
 
 			event.preventDefault();
+
+			$('#nav').hide();
+			$('#control').show();
 		});
 
 		$("#target-pivot" ).submit(function( event ) {
@@ -571,8 +581,18 @@
 			}
 			$('#code').text(header_text)
 			$("#target-pivot").hide();
-
+			// hide the top bar
+			$('#nav').hide();
+			$('#control').show();
 			event.preventDefault();
+
+
+		});
+
+
+		$('#reload-button').click(function() {
+			location.reload();
+			return false;
 		});
 
 
@@ -633,13 +653,15 @@
 
 			if (o_col_h === undefined) {
 				$("#original th").removeClass("highlight-col");
+				$("#original td").removeClass("highlight-col");
 			} else {
 				//Add highlight class to new column
 				$("#original th").removeClass("highlight-col");
-
-			  var index = Object.keys(data).indexOf(o_col_h[0]);
+				$("#original td").removeClass("highlight-col");
+			  var index = o_col_h[0];
 			  $("#original tr").each(function(i, tr) {
 			  	$(tr).find('th').eq(index).addClass("highlight-col");
+					$(tr).find('td').eq(index).addClass("highlight-col");
 			  });
 			}
 
@@ -683,6 +705,8 @@
 			var n_data = state["n_data"];
 			var n_col_ord = state["n_col_ord"];
 			var n_col_h = state["n_col_h"];
+			var n_row_h = state["n_row_h"];
+			var n_cell_h = state["n_cell_h"];
 
 			if (n_data === undefined) {
 				$("#grouped").html("");
@@ -708,6 +732,23 @@
 
 			}
 
+
+
+			if (n_row_h === undefined) {
+				$("#grouped tr").removeClass("highlight-row");
+			} else {
+				//Add highlight class to new column
+				$("#grouped tr").removeClass("highlight-row");
+
+				var idx = n_row_h.map(function(x) {return x+1;});
+				$("#grouped tr").each(function(j, tr) {
+					if (idx.includes(j)) {
+						$(tr).addClass("highlight-row");
+					}
+				});
+
+			}
+
 			if (n_col_h === undefined) {
 				$("#grouped th").removeClass("highlight-col");
 				$("#grouped td").removeClass("highlight-col");
@@ -718,10 +759,25 @@
 
 			  var index = n_col_h[0];
 			  $("#grouped tr").each(function(i, tr) {
+			  	$(tr).find('td').eq(index).addClass("highlight-col");
+			  });
+				$("#grouped tr").each(function(i, tr) {
 			  	$(tr).find('th').eq(index).addClass("highlight-col");
 			  });
-				$("#grouped tr").each(function(i, td) {
-			  	$(td).find('td').eq(index).addClass("highlight-col");
+			}
+
+			if (n_cell_h === undefined) {
+				$("#grouped td").removeClass("highlight-cell");
+				$("#grouped th").removeClass("highlight-cell");
+			} else {
+				//Add highlight class to new column
+				$("#grouped td").removeClass("highlight-cell");
+				$("#grouped tr").each(function(i, tr) {
+			  	$(tr).find('td').each(function(j, td) {
+						if (matrixSearch(n_cell_h, [i-1, j])) {
+							$(td).addClass("highlight-cell")
+						}
+					})
 			  });
 			}
 		}
@@ -769,7 +825,6 @@
 			return contained;
 
 		}
-
 
 	</script>
 </html>
