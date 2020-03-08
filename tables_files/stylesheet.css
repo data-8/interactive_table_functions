@@ -10,3 +10,8 @@
 .highlight-cell {
   background-color: green !important;
 }
+
+caption {
+  caption-side: top;
+  text-align: center;
+}

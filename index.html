@@ -28,9 +28,10 @@
 		    <li class="nav-item">
 		        <a href="#pivot-tab" class="nav-link" data-toggle="tab">Pivot</a>
 		    </li>
+				<!--
 		    <li class="nav-item">
 		        <a href="#join-tab" class="nav-link" data-toggle="tab">Join</a>
-		    </li>
+		    </li> -->
 			</ul>
 			<div class="tab-content">
 			    <div class="tab-pane active" id="group-tab">
@@ -175,16 +176,92 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12">
-					<h2 id="code"> &nbsp; </h2>
+					<h2 id="code"></h2>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-lg-6">
 					<table id="original" class="table table-striped table-bordered" style="width:100%">
+						<caption>cones</caption>
+						<thead>
+							<tr>
+								<th>Flavor</th>
+								<th>Price</th>
+								</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Strawberry</td>
+								<td>3.55</td>
+							</tr>
+							<tr>
+								<td>Chocolate</td>
+								<td>4.75</td>
+							</tr>
+							<tr>
+								<td>Chocolate</td>
+								<td>6.55</td>
+							</tr>
+							<tr>
+								<td>Strawberry</td>
+								<td>5.25</td>
+							</tr>
+							<tr>
+								<td>Chocolate</td>
+								<td>5.25</td>
+							</tr>
+						</tbody>
 					</table>
 				</div>
 				<div class="col-lg-6">
 					<table id="grouped" class="table table-striped table-bordered" style="width:100%">
+						<caption>chocolates</caption>
+						<thead>
+							<tr>
+								<th>Color</th>
+								<th>Shape</th>
+								<th>Amount</th>
+								<th>Price</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Dark</td>
+								<td>Round</td>
+								<td>4</td>
+								<td>1.3</td>
+							</tr>
+							<tr>
+								<td>Milk</td>
+								<td>Rectangular</td>
+								<td>6</td>
+								<td>1.2</td>
+							</tr>
+							<tr>
+								<td>White</td>
+								<td>Rectangular</td>
+								<td>12</td>
+								<td>2</td>
+							</tr>
+							<tr>
+								<td>Dark</td>
+								<td>Round</td>
+								<td>7</td>
+								<td>1.75</td>
+							</tr>
+							<tr>
+								<td>Milk</td>
+								<td>Rectangular</td>
+								<td>9</td>
+								<td>1.4</td>
+							</tr>
+							<tr>
+								<td>Milk</td>
+								<td>Round</td>
+								<td>2</td>
+								<td>1</td>
+							</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -198,7 +275,8 @@
 			</div>
 		</div>
 		<div class= "text-center">
-			<p>Inspired by <a target="_blank" href="http://pythontutor.com/visualize.html"><b>Python Tutor</b></a> (created by <a target="_blank" href="http://pgbovine.net/">Philip Guo</a>) and visualizations create by Divyesh Chotai. Created by Yanay Rosen.</p>
+			<p>Inspired by <a target="_blank" href="http://pythontutor.com/visualize.html"><b>Python Tutor</b></a> (created by <a target="_blank" href="http://pgbovine.net/">Philip Guo</a>) and visualizations created by Divyesh Chotai. Created by Yanay Rosen.</p>
+			<img src="./tables_files/full_logo_final.png" alt="Data 8 Logo" style="height:3em;">
 		</div>
 
 	</body>
@@ -331,11 +409,16 @@
 
 			if (func_name !== "count") {
 				// highlight the func name
-				var state = {"command_h":"func", "text":"Call the function on Arrays", "n_data":JSON.parse(JSON.stringify(n_data_real)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+				var state = {"command_h":"func", "text":"Call the function on Arrays", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "display_with_function":true};
+				states.push(state);
+				var state = {"n_data":JSON.parse(JSON.stringify(n_data_real)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+				states.push(state);
+			} else {
+				var state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
 				states.push(state);
 			}
 
-			// call the function on each cell if needed
+
 			return states
 		}
 
@@ -400,8 +483,9 @@
 				state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index]};
 				if (func_name !== "count") {
 					state["o_col_h"] = [o_ordered.indexOf(collect_column)];
+					state["display_as_arrays"] = true;
 				} else {
-					state["text"] = "By Default, pivout counts how often each pair occurs.";
+					state["text"] = "By Default, pivot counts how often each pair occurs.";
 				}
 
 				states.push(state);
@@ -409,8 +493,8 @@
 				if (func_name === "count") {
 					n_data = JSON.parse(JSON.stringify(n_data));
 					n_data[pivot_value][group_index] = n_data[pivot_value][group_index] + 1;
-					state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index], "text":"By Default, pivout counts how often each pair occurs."};
-					state["n_cell_h"] = [[group_index, pivot_index + 1]]
+					state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), "o_row_h":[i], "n_col_h":[pivot_index + 1], "n_row_h":[group_index], "text":"By Default, pivot counts how often each pair occurs."};
+					state["n_cell_h"] = [[group_index, pivot_index + 1]];
 					states.push(state);
 				} else {
 					//if its a function use arrays and highlight the column
@@ -420,12 +504,19 @@
 					state["o_col_h"] = [o_ordered.indexOf(collect_column)];
 					state["o_cell_h"] = [[i, o_ordered.indexOf(collect_column)]];
 					state["n_cell_h"] = [[group_index, pivot_index + 1]];
-					states.push(state);
+					state["display_as_arrays"] = true;
+
 				}
 
 			});
+
+
 			// finally, call the function if needed on arrays
 			if (func_name !== "count") {
+					var state = {"command_h":"func", "text":"Call the function on Arrays", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+					state["display_with_function"] = true;
+					state["display_as_arrays"] = true;
+					states.push(state);
 					n_data = JSON.parse(JSON.stringify(n_data));
 					pivot_uniq.forEach((pivot_col, i) => {
 						all_values = n_data[pivot_col];
@@ -434,9 +525,8 @@
 							if (func_name === "sum") {
 								real_value = cell_values.reduce((a, b) => a +b, 0);
 							} else if (func_name === "average" || func_name === "mean") {
-
 								real_value = cell_values.reduce((a, b) => a +b, 0) / cell_values.length;
-								console.log(real_value)
+
 							} else if (func_name === "first") {
 								real_value = cell_values[0];
 							} else if (func_name === "identity") {
@@ -463,6 +553,7 @@
 					});
 
 					var state = {"command_h":"func", "text":"Call the function on Arrays", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+
 					states.push(state);
 				};
 			var state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
@@ -481,6 +572,8 @@
 
 
 		$("#target-group" ).submit(function( event ) {
+			$("#grouped").empty();
+			$('#original').empty();
 			var col_name = $('#group-column').val();
 			var func_name = $('#group-function').val();
 			func_name_original = $('#group-function').val();
@@ -540,6 +633,8 @@
 		});
 
 		$("#target-pivot" ).submit(function( event ) {
+			$("#grouped").empty();
+			$('#original').empty();
 			var col_name_1 = $('#pivot-column-1').val();
 			var col_name_2 = $('#pivot-column-2').val();
 			var col_name_3 = $('#pivot-column-3').val();
@@ -589,7 +684,7 @@
 			$('#next').prop('disabled', false);
 
 			// set the header text
-			if (func_name_original === "no function (count)") {
+			if (func_name_original === "no function (count)" || col_name_3 === "no argument") {
 				header_text = dataset_val + ".pivot("+ col_name_1 + ", " + col_name_2 + ")";
 			} else {
 				pre_head_text = dataset_val + ".pivot(" + col_name_1 + ", " + col_name_2 + ", " + col_name_3 + ", ";
@@ -724,6 +819,8 @@
 			var n_col_h = state["n_col_h"];
 			var n_row_h = state["n_row_h"];
 			var n_cell_h = state["n_cell_h"];
+			var display_as_arrays = state["display_as_arrays"];
+			var display_with_function = state["display_with_function"];
 
 			if (n_data === undefined) {
 				$("#grouped").html("");
@@ -734,11 +831,22 @@
 				}).join("\n");
 
 				var trs = n_data[n_col_ord[0]].map(function(item, j) {
-					var tds = n_col_ord.map(function(key) {
+					var tds = n_col_ord.map(function(key, i) {
 						if (n_data[key][j] === undefined) {
 							n_data[key][j] = "";
 						}
-						var td = "<td>" + n_data[key][j] + "</td>";
+						var value = n_data[key][j];
+						if (i !== 0) {
+							if (display_as_arrays) {
+								value = "["  + value.join(", ") + "]"
+							}
+
+							if (display_with_function) {
+								value = func_name_original +  "("  + value + ")"
+							}
+						}
+
+						var td = "<td>" + value + "</td>";
 						return td;
 					});
 					return "<tr>\n" + tds.join("\n") + "</tr>";
