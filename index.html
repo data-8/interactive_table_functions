@@ -35,119 +35,119 @@
 			</ul>
 			<div class="tab-content">
 			    <div class="tab-pane active" id="group-tab">
-						<div class="row">
-							<div class="col-lg-12 text-center">
-								<form id="target-group">
-									<div class="form-group">
-										<div class="row text-center">
-											<div class="col-sm-2">
-												<select class="form-control" id="group-dataset">
-													<option>cones</option>
-													<option>chocolates</option>
-												</select>
-											</div>
-											<div class="col-xs-1">
-												<h2>.group(</h2>
-											</div>
-											<div class="col-md-3">
-												<select class="form-control" id="group-column">
-													<option>"Flavor"</option>
-													<option>"Price"</option>
-												</select>
-											</div>
-											<div class="col-xs-1">
-												<h2>, </h2>
-											</div>
-											<div class="col-md-3">
-												<select class="form-control" id="group-function">
-													<option>no function (count)</option>
-													<option>np.average</option>
-													<option>np.mean</option>
-													<option>sum</option>
-													<option>min</option>
-													<option>max</option>
-													<option>identity</option>
-													<option>first</option>
-												</select>
-											</div>
-											<div class="col-xs-2">
-												<h2>)</h2>
-											</div>
-											<div class="col-md-2">
-												<button type="submit" class="btn btn-primary">Visualize!</button>
-											</div>
+					<div class="row">
+						<div class="col-lg-12 text-center">
+							<form id="target-group">
+								<div class="form-group">
+									<div class="row text-center align-items-center">
+										<div class="col-auto">
+											<select class="form-control" id="group-dataset" aria-label="Select dataset">
+												<option>cones</option>
+												<option>chocolates</option>
+											</select>
+										</div>
+										<div class="col-auto">
+											<span class="h4 mb-0">.group(</span>
+										</div>
+										<div class="col-auto">
+											<select class="form-control" id="group-column" aria-label="Column to group by">
+												<option>"Flavor"</option>
+												<option>"Price"</option>
+											</select>
+										</div>
+										<div class="col-auto">
+											<span class="h4 mb-0">, </span>
+										</div>
+										<div class="col-auto">
+											<select class="form-control" id="group-function" aria-label="Aggregation function">
+												<option>no function (count)</option>
+												<option>np.average</option>
+												<option>np.mean</option>
+												<option>sum</option>
+												<option>min</option>
+												<option>max</option>
+												<option>identity</option>
+												<option>first</option>
+											</select>
+										</div>
+										<div class="col-auto">
+											<span class="h4 mb-0">)</span>
+										</div>
+										<div class="col-auto">
+											<button type="submit" class="btn btn-primary">Visualize!</button>
 										</div>
 									</div>
-								</form>
-							</div>
+								</div>
+							</form>
 						</div>
+					</div>
 			    </div>
 			    <div class="tab-pane" id="pivot-tab">
-						<div class="row">
-							<div class="col-lg-12 text-center">
-								<form id="target-pivot">
-									<div class="form-group">
-										<div class="row text-center">
-											<div class="col-lg-1">
-												<select class="form-control" id="pivot-dataset">
-													<option>cones</option>
-													<option>chocolates</option>
-												</select>
-											</div>
-											<div class="col-xs-1">
-												<h2>.pivot(</h2>
-											</div>
-											<div class="col-lg-1">
-												<select class="form-control" id="pivot-column-1">
-													<option>"Flavor"</option>
-													<option>"Price"</option>
-												</select>
-											</div>
-											<div class="col-xs-1">
-												<h2>, </h2>
-											</div>
-											<div class="col-lg-1">
-												<select class="form-control" id="pivot-column-2">
-													<option>"Flavor"</option>
-													<option>"Price"</option>
-												</select>
-											</div>
-											<div class="col-xs-1">
-												<h2>, </h2>
-											</div>
-											<div class="col-lg-2">
-												<select class="form-control" id="pivot-column-3">
-													<option>no argument</option>
-													<option>"Flavor"</option>
-													<option>"Price"</option>
-												</select>
-											</div>
-											<div class="col-xs-1">
-												<h2>, </h2>
-											</div>
-											<div class="col-md-2">
-												<select class="form-control" id="pivot-function">
-													<option>no function (count)</option>
-													<option>np.average</option>
-													<option>np.mean</option>
-													<option>sum</option>
-													<option>min</option>
-													<option>max</option>
-													<option>identity</option>
-													<option>first</option>
-												</select>
-											</div>
-											<div class="col-xs-2">
-												<h2>)</h2>
-											</div>
-											<div class="col-md-2">
-												<button type="submit" class="btn btn-primary">Visualize!</button>
-											</div>
+					<div class="row">
+						<div class="col-lg-12 text-center">
+							<form id="target-pivot">
+								<div class="form-group">
+									<div class="row text-center align-items-center">
+										<div class="col-auto">
+											<select class="form-control" id="pivot-dataset" aria-label="Select dataset">
+												<option>cones</option>
+												<option>chocolates</option>
+											</select>
+										</div>
+										<div class="col-auto">
+											<span class="h4 mb-0">.pivot(</span>
+										</div>
+										<div class="col-auto">
+											<select class="form-control" id="pivot-column-1" aria-label="Pivot column">
+												<option>"Flavor"</option>
+												<option>"Price"</option>
+											</select>
+										</div>
+										<div class="col-auto">
+											<span class="h4 mb-0">, </span>
+										</div>
+										<div class="col-auto">
+											<select class="form-control" id="pivot-column-2" aria-label="Rows column">
+												<option>"Flavor"</option>
+												<option>"Price"</option>
+											</select>
+										</div>
+										<div class="col-auto">
+											<span class="h4 mb-0">, </span>
+										</div>
+										<div class="col-auto">
+											<select class="form-control" id="pivot-column-3" aria-label="Values column">
+												<option>no argument</option>
+												<option>"Flavor"</option>
+												<option>"Price"</option>
+											</select>
+										</div>
+										<div class="col-auto">
+											<span class="h4 mb-0">, </span>
+										</div>
+										<div class="col-auto">
+											<select class="form-control" id="pivot-function" aria-label="Aggregation function">
+												<option>no function (count)</option>
+												<option>np.average</option>
+												<option>np.mean</option>
+												<option>sum</option>
+												<option>min</option>
+												<option>max</option>
+												<option>identity</option>
+												<option>first</option>
+											</select>
+										</div>
+										<div class="col-auto">
+											<span class="h4 mb-0">)</span>
+										</div>
+										<div class="col-auto">
+											<button type="submit" class="btn btn-primary">Visualize!</button>
 										</div>
 									</div>
-								</form>
-							</div>
+								</div>
+							</form>
 						</div>
+					</div>
 			    </div>
 			    <div class="tab-pane" id="join-tab">
 						<div class="row">
@@ -268,9 +268,9 @@
 			<div class="row">
 				<div class="col-lg-12 text-center" id="control" style="display: none;">
 					<h2 id="text"> &nbsp; </h2>
-					<button type="button" class="btn btn-danger" id="back">< Previous Step</button>
-  				<button type="button" class="btn btn-success" id="next">Next Step ></button>
-					<button type="button" class="btn btn-primary" id="reload-button">New Visualization</button>
+					<button type="button" class="btn btn-danger" id="back" aria-label="Go to previous step">< Previous Step</button>
+  				<button type="button" class="btn btn-success" id="next" aria-label="Go to next step">Next Step ></button>
+					<button type="button" class="btn btn-primary" id="reload-button" aria-label="Start a new visualization">New Visualization</button>
 				</div>
 			</div>
 		</div>
@@ -287,7 +287,29 @@
 		}
 		var data;
 
-		// group function
+	// Smart sort function that handles both numbers and strings
+	function smartSort(arr) {
+		// Check if first element is a number
+		if (arr.length > 0 && typeof arr[0] === 'number') {
+			// Numeric sort
+			return arr.sort(function(a, b) { return a - b; });
+		} else {
+			// String sort (lexicographic)
+			return arr.sort();
+		}
+	}
+
+	// Helper function to format array values (adds quotes around strings)
+	function formatArrayValues(arr) {
+		return arr.map(function(val) {
+			if (typeof val === 'string') {
+				return '"' + val + '"';
+			}
+			return val;
+		}).join(", ");
+	}
+
+	// group function
 		function group(dataset, column, func_name) {
 			var states = [];
 			var data = dataset["data"];
@@ -335,12 +357,12 @@
 					states.push(state);
 				});
 			}
-			// phase two is get unique values
-			var uniq = new Set(data[column]);
-			// highlight the group column in original table
-			// display the uniq values of text
-			var unique_str = "Unique values: [" + Array.from(uniq).join(', ') + "]";
-			var state = {"o_col_h":[dataset["col_order"].indexOf(column)], "text":unique_str, "n_col_ord":JSON.parse(JSON.stringify(ordered)), "n_data":JSON.parse(JSON.stringify(n_data))};
+		// phase two is get unique values
+		var uniq = smartSort(Array.from(new Set(data[column])));
+		// highlight the group column in original table
+		// display the uniq values of text
+		var unique_str = "Unique values (sorted): [" + Array.from(uniq).join(', ') + "]";
+		var state = {"o_col_h":[dataset["col_order"].indexOf(column)], "text":unique_str, "n_col_ord":JSON.parse(JSON.stringify(ordered)), "n_data":JSON.parse(JSON.stringify(n_data))};
 			states.push(state);
 
 			// phase three is step through the original table and generate the arrays
@@ -370,35 +392,44 @@
 						if (item == column) {
 							return;
 						}
-						// highlight the specific column in original table and highlight the row values
-						var cell_highlights = [];
-						var cell_values = [];
-						var new_col_name = item + " " + func_name;
-						idx_to_highlight.forEach((value, j) => {
-								// step through the rest of the columns
-								var cell = [value, i];
-								cell_highlights.push(cell);
-								cell_values.push(data[item][value]);
-						});
-						n_data[new_col_name].push("[" + Array.from(cell_values).join(", ") +"]");
-						var real_value;
-						if (func_name === "sum") {
-							real_value = cell_values.reduce((a, b) => a +b, 0);
-						} else if (func_name === "average" || func_name === "mean") {
-							real_value = cell_values.reduce((a, b) => a +b, 0) / cell_values.length;
-						} else if (func_name === "first") {
-							real_value = cell_values[0];
-						} else if (func_name === "identity") {
-							real_value = "[" + Array.from(cell_values) +"]"
-						} else if (func_name === "max") {
+					// highlight the specific column in original table and highlight the row values
+					var cell_highlights = [];
+					var cell_values = [];
+					var new_col_name = item + " " + func_name;
+					idx_to_highlight.forEach((value, j) => {
+							// step through the rest of the columns
+							var cell = [value, i];
+							cell_highlights.push(cell);
+							cell_values.push(data[item][value]);
+					});
+				n_data[new_col_name].push("[" + formatArrayValues(cell_values) +"]");
+					var real_value;
+				if (func_name === "sum") {
+					real_value = cell_values.reduce((a, b) => a +b, 0);
+				} else if (func_name === "average" || func_name === "mean") {
+					real_value = cell_values.reduce((a, b) => a +b, 0) / cell_values.length;
+				} else if (func_name === "first") {
+					real_value = cell_values[0];
+				} else if (func_name === "identity") {
+					real_value = "[" + formatArrayValues(cell_values) +"]"
+				} else if (func_name === "max") {
+						if (typeof cell_values[0] === "string") {
+							real_value = cell_values.reduce((a, b) => a > b ? a : b);
+						} else {
 							real_value = Math.max.apply(null, cell_values);
-						} else if (func_name === "min") {
+						}
+					} else if (func_name === "min") {
+						if (typeof cell_values[0] === "string") {
+							real_value = cell_values.reduce((a, b) => a < b ? a : b);
+						} else {
 							real_value = Math.min.apply(null, cell_values);
 						}
+					}
 
-						if (func_name !== "identity" && func_name !== "first" && func_name !== "count" && typeof cell_values[0] === "string") {
-							real_value = "";
-						}
+					// Only sum, average, and mean don't work on strings
+					if ((func_name === "sum" || func_name === "average" || func_name === "mean") && typeof cell_values[0] === "string") {
+						real_value = "";
+					}
 						n_data_real[new_col_name].push(real_value);
 						var state = {"o_col_h":[dataset["col_order"].indexOf(item)], "o_row_h":JSON.parse(JSON.stringify(idx_to_highlight)), "o_cell_h":JSON.parse(JSON.stringify(cell_highlights)), "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
 						states.push(state);
@@ -422,20 +453,20 @@
 			return states
 		}
 
-		function pivot(data, pivot_column, group_column, collect_column, func_name) {
-			var o_ordered = data["col_order"];
-			var data = data["data"]
-			var states = [];
-			// phase one is generate the new table with columns and rows
-			var original_columns = Object.keys(data);
-			var pivot_uniq = Array.from(new Set(data[pivot_column]));
-			var group_uniq = Array.from(new Set(data[group_column]));
+	function pivot(data, pivot_column, group_column, collect_column, func_name) {
+		var o_ordered = data["col_order"];
+		var data = data["data"]
+		var states = [];
+		// phase one is generate the new table with columns and rows
+		var original_columns = Object.keys(data);
+		var pivot_uniq = smartSort(Array.from(new Set(data[pivot_column])));
+		var group_uniq = smartSort(Array.from(new Set(data[group_column])));
 			var new_columns = [group_column].concat(pivot_uniq);
 			// display the new columns
 
-			var states = [];
-			// highlight the pivot column
-			var state = {"o_col_h":[o_ordered.indexOf(pivot_column)], "text":"Unique Value(s) in Pivot Column are: [" + pivot_uniq.join(", ") + "]"};
+		var states = [];
+		// highlight the pivot column
+		var state = {"o_col_h":[o_ordered.indexOf(pivot_column)], "text":"Unique Value(s) in Pivot Column (sorted): [" + pivot_uniq.join(", ") + "]"};
 			states.push(state);
 
 			var n_data = {};
@@ -449,9 +480,9 @@
 			states.push(state);
 
 
-			// add the rows
-			n_data[group_column] = JSON.parse(JSON.stringify(group_uniq));
-			state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), text:"Unique Value(s) in group column are: [" + group_uniq.join(", ") + "]", "o_col_h":[o_ordered.indexOf(group_column)]};
+		// add the rows
+		n_data[group_column] = JSON.parse(JSON.stringify(group_uniq));
+		state = {"n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered)), text:"Unique Value(s) in group column (sorted): [" + group_uniq.join(", ") + "]", "o_col_h":[o_ordered.indexOf(group_column)]};
 			states.push(state);
 
 			// iterate through the pairings highlighting the pivot column and row value, the group column and row value in n
@@ -511,42 +542,62 @@
 			});
 
 
-			// finally, call the function if needed on arrays
-			if (func_name !== "count") {
-					var state = {"command_h":"func", "text":"Call the function on Arrays", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
-					state["display_with_function"] = true;
-					state["display_as_arrays"] = true;
-					states.push(state);
-					n_data = JSON.parse(JSON.stringify(n_data));
-					pivot_uniq.forEach((pivot_col, i) => {
-						all_values = n_data[pivot_col];
-						all_values = all_values.map(function(cell_values) {
-							var real_value;
-							if (func_name === "sum") {
-								real_value = cell_values.reduce((a, b) => a +b, 0);
-							} else if (func_name === "average" || func_name === "mean") {
-								real_value = cell_values.reduce((a, b) => a +b, 0) / cell_values.length;
+		// finally, call the function if needed on arrays
+		if (func_name !== "count") {
+				// Check the data type of the collect column
+				var collect_column_type = typeof data[collect_column][0];
+				var func_works_on_type = true;
+				if ((func_name === "sum" || func_name === "average" || func_name === "mean") && collect_column_type === "string") {
+					func_works_on_type = false;
+				}
+				
+				var state = {"command_h":"func", "text":"Call the function on Arrays", "n_data":JSON.parse(JSON.stringify(n_data)), "n_col_ord":JSON.parse(JSON.stringify(ordered))};
+				state["display_with_function"] = true;
+				state["display_as_arrays"] = true;
+				states.push(state);
+				n_data = JSON.parse(JSON.stringify(n_data));
+				pivot_uniq.forEach((pivot_col, i) => {
+					all_values = n_data[pivot_col];
+					all_values = all_values.map(function(cell_values) {
+					// If function doesn't work on this data type, always return "None"
+					if (!func_works_on_type) {
+						return "None";
+					}
+					
+					// If no data for this combination, return empty string
+					if (cell_values.length === 0) {
+						return "";
+					}
+					
+					var real_value;
+					if (func_name === "sum") {
+						real_value = cell_values.reduce((a, b) => a +b, 0);
+					} else if (func_name === "average" || func_name === "mean") {
+						real_value = cell_values.reduce((a, b) => a +b, 0) / cell_values.length;
 
-							} else if (func_name === "first") {
-								real_value = cell_values[0];
-							} else if (func_name === "identity") {
-								real_value = "[" + Array.from(cell_values) +"]"
-							} else if (func_name === "max") {
+					} else if (func_name === "first") {
+						real_value = cell_values[0];
+					} else if (func_name === "identity") {
+						real_value = "[" + formatArrayValues(cell_values) +"]"
+					} else if (func_name === "max") {
+							if (typeof cell_values[0] === "string") {
+								real_value = cell_values.reduce((a, b) => a > b ? a : b);
+							} else {
 								real_value = Math.max.apply(null, cell_values);
-							} else if (func_name === "min") {
+							}
+						} else if (func_name === "min") {
+							if (typeof cell_values[0] === "string") {
+								real_value = cell_values.reduce((a, b) => a < b ? a : b);
+							} else {
 								real_value = Math.min.apply(null, cell_values);
 							}
+					}
 
-							if (func_name !== "identity" && func_name !== "first" && func_name !== "count" && typeof cell_values[0] === "string") {
-								real_value = 0;
-							}
-							if (real_value !== real_value) {
-								real_value = 0;
-							}
-							if (real_value === null) {
-								real_value = ""
-							}
-							return real_value;
+				// Handle edge cases (shouldn't happen since we check type earlier)
+				if (real_value !== real_value || real_value === null || real_value === undefined) {
+					real_value = "";
+				}
+						return real_value;
 						});
 
 						n_data[pivot_col] = JSON.parse(JSON.stringify(all_values));
@@ -835,16 +886,16 @@
 						if (n_data[key][j] === undefined) {
 							n_data[key][j] = "";
 						}
-						var value = n_data[key][j];
-						if (i !== 0) {
-							if (display_as_arrays) {
-								value = "["  + value.join(", ") + "]"
-							}
-
-							if (display_with_function) {
-								value = func_name_original +  "("  + value + ")"
-							}
+					var value = n_data[key][j];
+					if (i !== 0) {
+						if (display_as_arrays) {
+							value = "["  + formatArrayValues(value) + "]"
 						}
+
+						if (display_with_function) {
+							value = func_name_original +  "("  + value + ")"
+						}
+					}
 
 						var td = "<td>" + value + "</td>";
 						return td;
